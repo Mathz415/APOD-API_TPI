@@ -41,16 +41,6 @@
         <button type="submit">Visualizza Immagine</button>
     </form>
     <hr>
-    <form action="/" method="post">
-        <label for="data-iniziale">Data Iniziale:</label>
-        <input type="date" id="data-iniziale" name="data-iniziale" value="{{ data_iniziale }}" required>
-
-        <label for="data-finale">Data Finale:</label>
-        <input type="date" id="data-finale" name="data-finale" value="{{ data_finale }}" required>
-
-        <button type="submit">Visualizza Immagini</button>
-    </form>
-    <hr>
     {% if dati_nasa %}
         <div class="image-title">
             <h1>{{ dati_nasa.title }} | {{ dati_nasa.date }}</h1>
