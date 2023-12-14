@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizza Immagine NASA</title>
+</head>
+<body>
+
+    <h1>Immagine NASA</h1>
+
+    <div>
+        <h2>Data Iniziale: {{ data_inziale }}</h2>
+        <h2>Data Finale: {{ data_finale }}</h2>
+    </div>
+    {% for item in xml_data %}
+        <!-- Visualizzazione dell'immagine -->
+        <div>
+            <img src="{{ xml_data.root.item.hdurl }}" alt="Immagine NASA">
+        </div>
+
+        <!-- Altri dettagli -->
+        <div>
+            <h2>Dettagli:</h2>
+            <p>Data: {{ xml_data.root.item.date }}</p>
+            <p>Spiegazione: {{ xml_data.root.item.explanation }}</p>
+            <!-- Aggiungi ulteriori dettagli in base alla struttura dei tuoi dati XML -->
+        </div>
+    {% endfor %}
+</body>
+</html>

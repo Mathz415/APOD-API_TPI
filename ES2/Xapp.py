@@ -51,7 +51,7 @@ def visualizza_immagine():
     # Converti i dati JSON in XML
     dati_xml = convert_to_xml(dati_nasa)
 
-    return render_template('index.html', dati_xml=dati_xml, data_selezionata=data_selezionata)
+    return render_template('template.html', dati_xml=dati_xml, data_selezionata=data_selezionata)
 
 if __name__ == '__main__':
     app.run(debug=True)

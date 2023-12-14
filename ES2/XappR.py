@@ -1,8 +1,22 @@
 from flask import Flask, render_template, request
 import requests
 import datetime
+import xmltodict
 
 app = Flask(__name__)
+
+def json_to_xml(json_data):
+    try:
+        # Se la risposta è una lista, creiamo un dizionario con un nome di radice arbitrario
+        if isinstance(json_data, list):
+            json_data = {"root": {"item": json_data}}
+
+        # Trasforma i dati JSON in formato XML
+        xml_data = xmltodict.unparse(json_data, pretty=True)
+        return xmltodict.parse(xml_data)
+    except Exception as e:
+        return {"errore": f"Errore durante la conversione JSON to XML: {e}"}
+
 
 
 def get_data_NASA_API(data_inziale, data_finale):
@@ -39,8 +53,11 @@ def visualizza_immagine():
 
     # Chiama la funzione che recupera i dati dall'API NASA
     dati_nasa = get_data_NASA_API(data_inziale, data_finale)
+    
+    # Converti i dati JSON in XML
+    xml_data = json_to_xml(dati_nasa)
 
-    return render_template('templateR.html', dati_nasa=dati_nasa)
+    return render_template('templateR.html', xml_data=xml_data, data_inziale=data_inziale, data_finale=data_finale)
 
 if __name__ == '__main__':
     app.run(debug=True)
