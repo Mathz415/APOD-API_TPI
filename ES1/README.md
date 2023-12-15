@@ -68,7 +68,7 @@ Make sure you have Python and pip installed on your machine.
 
 1. `cd` into the new directory
 ```bash
-cd APOD-API_TPI
+cd APOD-API_TPI/ES1
 ```
 2. Create a new virtual environment `env` in the directory
 ```bash
@@ -98,7 +98,9 @@ Open your web browser and go to http://localhost:5000 to view the NASA image for
 ```bash
 Example: http://localhost:5000?data=2023-01-01
 ```
-- Selecting multiple dates is still in the works.
+```bash
+Example: http://localhost:5000?start_date=2017-07-08&end_date=2017-07-10
+```
 
 ## Built With
 - Flask - Web framework for Python
