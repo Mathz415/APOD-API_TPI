@@ -37,9 +37,9 @@ pip install Flask requests xmltodict
 ```
 1. Run the Flask application
 ```bash
-python Xapp.py
+python XMLWiew.py
 ```
-Open your web browser and go to http://localhost:5000 to view the NASA image for the current date.
+Open your web browser and navigate to http://127.0.0.1:5000/. You should see the NASA Image of the Day in XML format for the current date.
 
 ## Styling
 

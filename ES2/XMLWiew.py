@@ -5,26 +5,24 @@ import xmltodict
 
 app = Flask(__name__)
 
-def json_to_xml(json_data):
+def convert_to_xml(json_data):
     try:
-        # Se la risposta è una lista, creiamo un dizionario con un nome di radice arbitrario
-        if isinstance(json_data, list):
-            json_data = {"root": {"item": json_data}}
+        # Assicurati che ci sia un elemento radice chiamato "root"
+        root_element = {"root": json_data}
 
-        # Trasforma i dati JSON in formato XML
-        xml_data = xmltodict.unparse(json_data, pretty=True)
-        return xmltodict.parse(xml_data)
+        xml_data = xmltodict.unparse(root_element, pretty=True)
+        return xml_data
     except Exception as e:
-        return {"errore": f"Errore durante la conversione JSON to XML: {e}"}
+        return f"Errore durante la conversione JSON to XML: {str(e)}"
 
 
 
-def get_data_NASA_API(data_inziale, data_finale):
+def get_data_NASA_API(data):
     # Imposta la tua chiave API NASA
     api_key = 'SV3ftunNB8SLaZuZqhrpEJnfc8yaokNvDD7bWO6e'
 
     # URL dell'API della NASA per l'immagine del giorno
-    url = f'https://api.nasa.gov/planetary/apod?api_key={api_key}&start_date={data_inziale}&end_date={data_finale}'
+    url = f'https://api.nasa.gov/planetary/apod?api_key={api_key}&date={data}'
 
     try:
         # Effettua la richiesta GET all'API della NASA
@@ -45,19 +43,18 @@ def get_data_NASA_API(data_inziale, data_finale):
     except requests.exceptions.RequestException as err:
         return {"errore": f"Errore durante la richiesta: {err}"}
 
-@app.route('/', methods=['POST','GET'])
+@app.route('/', methods=['GET'])
 def visualizza_immagine():
     # Ottieni la data selezionata dall'utente o utilizza la data corrente come default
-    data_inziale = request.args.get('data-iniziale', str(datetime.date.today()))
-    data_finale = request.args.get('data-finale', str(datetime.date.today()))
+    data_selezionata = request.args.get('data', str(datetime.date.today()))
 
     # Chiama la funzione che recupera i dati dall'API NASA
-    dati_nasa = get_data_NASA_API(data_inziale, data_finale)
-    
-    # Converti i dati JSON in XML
-    xml_data = json_to_xml(dati_nasa)
+    dati_nasa = get_data_NASA_API(data_selezionata)
 
-    return render_template('templateR.html', xml_data=xml_data, data_inziale=data_inziale, data_finale=data_finale)
+    # Converti i dati JSON in XML
+    dati_xml = convert_to_xml(dati_nasa)
+
+    return dati_xml
 
 if __name__ == '__main__':
     app.run(debug=True)
