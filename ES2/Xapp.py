@@ -1,4 +1,6 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+import requests
+import datetime
 
 app = Flask(__name__)
 
@@ -26,4 +28,5 @@ def visualizza_dati_xml():
         return {"errore": f"Errore durante la richiesta: {err}"}
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=5001)
+
