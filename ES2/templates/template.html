@@ -44,14 +44,14 @@
 
     {% if dati_xml %}
         <div class="image-title">
-            <h1>{{ dati_xml.root.title }} | {{ dati_xml.root.date }}</h1>
+            <h1>{{ dati_xml['root']['title'] }} | {{ dati_xml['root']['date'] }}</h1>
         </div>
 
         <div class="image-container">
-            <img src="{{ dati_xml.root.hdurl }}" alt="Immagine del Giorno">
+            <img src="{{ dati_xml['root']['hdurl'] }}" alt="Immagine del Giorno">
         </div>
         <div class="image-details">
-            <p>{{ dati_xml.root.explanation }}</p>
+            <p>{{ dati_xml['root']['explanation'] }}</p>
         </div>
     {% else %}
         <p>Errore durante il recupero dei dati dell'immagine.</p>

@@ -15,7 +15,9 @@ def visualizza_dati_xml():
         response.raise_for_status()  # Lancia un'eccezione per errori HTTP
 
         # Estrai i dati XML dalla risposta
-        dati_xml = response.text
+        dati_xml = response.text  # Utilizza .text per ottenere il contenuto del corpo della risposta
+
+        # Restituisci i dati XML come contesto per il rendering del template HTML
         return render_template('template.html', dati_xml=dati_xml)
 
     except requests.exceptions.HTTPError as errh:
@@ -29,4 +31,3 @@ def visualizza_dati_xml():
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
-
