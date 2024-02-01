@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Image of the Day</title>
+</head>
+<body>
+
+    <style type="text/css">
+        
+        body {
+            background-color: antiquewhite;
+        }
+
+        .image-title {
+            text-align: left;
+        }
+
+        .image-container {
+            text-align: center;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            max-height: 500px;
+            margin: 20px 0;
+            box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
+        }
+
+        .image-details p {
+            margin-bottom: 10px;
+            box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+        }
+
+    </style>
+
+    <form action="/" method="get">
+        <label for="data">Seleziona una data:</label>
+        <input type="date" id="data" name="data" value="{{ data_selezionata }}">
+        <button type="submit">Visualizza Immagine</button>
+    </form>
+    <hr>
+
+    {% if dati_xml %}
+        {% set xml_dict = xmltodict.parse(dati_xml) %}
+        <div class="image-title">
+            <h1>{{ xml_dict.root.title }} | {{ xml_dict.root.date }}</h1>
+        </div>
+
+        <div class="image-container">
+            <img src="{{ xml_dict.root.hdurl }}" alt="Immagine del Giorno">
+        </div>
+        <div class="image-details">
+            <p>{{ xml_dict.root.explanation }}</p>
+        </div>
+    {% else %}
+        <p>Errore durante il recupero dei dati dell'immagine.</p>
+    {% endif %}
+    <hr>
+    <a href="https://www.nasa.gov"><img src="https://www.nasa.gov/wp-content/themes/nasa/assets/images/nasa-logo.svg" align="right"></a>
+</body>
+</html>
