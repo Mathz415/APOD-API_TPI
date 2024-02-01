@@ -5,33 +5,35 @@ import datetime
 
 app = Flask(__name__)
 
-# ... (resto del codice)
+def get_xml_data(data):
+    # Ottieni i dati XML dalla route "/xml"
+    url = f'http://127.0.0.1:5000/xml?data={data}'
+    response = requests.get(url)
+    
+    # Controlla se la richiesta ha avuto successo (status code 200)
+    if response.status_code == 200:
+        # Estrai i dati XML dalla risposta
+        xml_data = response.text
 
-@app.route('/visualizza_xml', methods=['GET'])
+        try:
+            # Converti i dati XML in un dizionario usando xmltodict
+            dati_xml = xmltodict.parse(xml_data)
+            return dati_xml
+        except xmltodict.ExpatError as e:
+            return f"Errore durante la conversione XML: {str(e)}"
+    else:
+        return f"Errore durante il recupero dei dati XML: {response.status_code}"
+
+
+@app.route('/', methods=['GET'])
 def visualizza_dati_xml():
-    url_dati_xml = 'http://127.0.0.1:5000/xml'
+    # Ottieni la data selezionata dall'utente o utilizza la data corrente come default
+    data_selezionata = request.args.get('data', str(datetime.date.today()))
 
-    try:
-        response = requests.get(url_dati_xml)
-        response.raise_for_status()
+    # Ottieni i dati XML dalla funzione get_xml_data
+    dati_xml = get_xml_data(data_selezionata)
 
-        dati_xml_str = response.text
-
-        # Converti la stringa XML in un dizionario
-        dati_xml_dict = xmltodict.parse(dati_xml_str)
-
-        return render_template('templateX.html', dati_xml=dati_xml_dict)
-
-    except requests.exceptions.HTTPError as errh:
-        return {"errore": f"Errore HTTP: {errh}"}
-    except requests.exceptions.ConnectionError as errc:
-        return {"errore": f"Errore di connessione: {errc}"}
-    except requests.exceptions.Timeout as errt:
-        return {"errore": f"Timeout della richiesta: {errt}"}
-    except requests.exceptions.RequestException as err:
-        return {"errore": f"Errore durante la richiesta: {err}"}
-
-# ... (resto del codice)
+    return render_template('templateX.html', dati_xml=dati_xml, data_selezionata=data_selezionata)
 
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
