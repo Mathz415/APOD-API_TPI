@@ -6,7 +6,7 @@ import datetime
 app = Flask(__name__)
 
 def get_json_data(data):
-    # Costruisci l'URL per ottenere i dati JSON dall'endpoint /json
+    # URL per ottenere i dati JSON dall'endpoint /json
     url = f'http://127.0.0.1:5000/json?data={data}'
     
     try:
@@ -33,10 +33,10 @@ def visualizza_dati_json():
     # Ottieni la data selezionata dall'utente o utilizza la data corrente come default
     data_selezionata = request.args.get('data', str(datetime.date.today()))
 
-    # Chiama la funzione che recupera i dati JSON dall'endpoint /json
+    # funzione che recupera i dati JSON dall'endpoint /json
     dati_nasa = get_json_data(data_selezionata)
 
     return render_template('template.html', dati_nasa=dati_nasa, data_selezionata=data_selezionata)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+    app.run(debug=True, port=5002)

@@ -6,7 +6,7 @@ import datetime
 app = Flask(__name__)
 
 def get_xml_data(data):
-    # Ottieni i dati XML dalla route "/xml"
+    # URL per ottenere i dati XML dall'endpoint /xml
     url = f'http://127.0.0.1:5000/xml?data={data}'
     response = requests.get(url)
     

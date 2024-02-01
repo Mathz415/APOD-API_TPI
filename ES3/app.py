@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 def convert_to_xml(json_data):
     try:
-        # Assicurati che ci sia un elemento radice chiamato "root"
+        # elemento radice chiamato "root"
         root_element = {"root": json_data}
 
         xml_data = xmltodict.unparse(root_element, pretty=True)
@@ -17,14 +17,14 @@ def convert_to_xml(json_data):
         return f"Errore durante la conversione JSON to XML: {str(e)}"
 
 def get_data_NASA_API(data):
-    # Imposta la tua chiave API NASA
+    # Imposta chiave API NASA
     api_key = 'SV3ftunNB8SLaZuZqhrpEJnfc8yaokNvDD7bWO6e'
 
     # URL dell'API della NASA per l'immagine del giorno
     url = f'https://api.nasa.gov/planetary/apod?api_key={api_key}&date={data}'
 
     try:
-        # Effettua la richiesta GET all'API della NASA
+        # richiesta GET all'API della NASA
         response = requests.get(url)
         response.raise_for_status()  # Lancia un'eccezione per errori HTTP
 
@@ -47,7 +47,7 @@ def visualizza_immagine():
     # Ottieni la data selezionata dall'utente o utilizza la data corrente come default
     data_selezionata = request.args.get('data', str(datetime.date.today()))
 
-    # Chiama la funzione che recupera i dati dall'API NASA
+    # funzione che recupera i dati dall'API NASA
     dati_nasa = get_data_NASA_API(data_selezionata)
 
     return render_template('template.html', dati_nasa=dati_nasa, data_selezionata=data_selezionata)
@@ -57,7 +57,7 @@ def XML():
     # Ottieni la data selezionata dall'utente o utilizza la data corrente come default
     data_selezionata = request.args.get('data', str(datetime.date.today()))
 
-    # Chiama la funzione che recupera i dati dall'API NASA
+    # funzione che recupera i dati dall'API NASA
     dati_nasa = get_data_NASA_API(data_selezionata)
 
     # Converti i dati JSON in XML
@@ -70,7 +70,7 @@ def JSON():
     # Ottieni la data selezionata dall'utente o utilizza la data corrente come default
     data_selezionata = request.args.get('data', str(datetime.date.today()))
 
-    # Chiama la funzione che recupera i dati dall'API NASA
+    # funzione che recupera i dati dall'API NASA
     dati_nasa = get_data_NASA_API(data_selezionata)
 
     return dati_nasa
