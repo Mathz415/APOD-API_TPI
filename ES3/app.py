@@ -42,7 +42,7 @@ def get_data_NASA_API(data):
     except requests.exceptions.RequestException as err:
         return {"errore": f"Errore durante la richiesta: {err}"}
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def visualizza_immagine():
     # Ottieni la data selezionata dall'utente o utilizza la data corrente come default
     data_selezionata = request.args.get('data', str(datetime.date.today()))
@@ -52,7 +52,7 @@ def visualizza_immagine():
 
     return render_template('template.html', dati_nasa=dati_nasa, data_selezionata=data_selezionata)
 
-@app.route('/xml', methods=['GET', 'POST'])
+@app.route('/xml', methods=['GET'])
 def XML():
     # Ottieni la data selezionata dall'utente o utilizza la data corrente come default
     data_selezionata = request.args.get('data', str(datetime.date.today()))
@@ -65,7 +65,7 @@ def XML():
 
     return dati_xml
 
-@app.route('/json', methods=['GET', 'POST'])
+@app.route('/json', methods=['GET'])
 def JSON():
     # Ottieni la data selezionata dall'utente o utilizza la data corrente come default
     data_selezionata = request.args.get('data', str(datetime.date.today()))
