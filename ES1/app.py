@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 def get_data_NASA_API(data):
     # Imposta la tua chiave API NASA
-    api_key = 'SV3ftunNB8SLaZuZqhrpEJnfc8yaokNvDD7bWO6e'
+    api_key = ''
 
     # URL dell'API della NASA per l'immagine del giorno
     url = f'https://api.nasa.gov/planetary/apod?api_key={api_key}&date={data}'
